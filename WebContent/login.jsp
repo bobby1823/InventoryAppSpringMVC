@@ -1,11 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <title>Login Page</title>
-<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/resources/css/style.css" 
+													rel="stylesheet" type="text/css" />
 
 <script type="text/javascript" language="javascript">
 		var flag = 0;
@@ -44,7 +47,7 @@
 </head>
 <body style="background-color: lightblue;">
 
-	<form action="Login" name = "loginCredentialsForm" method='get' onsubmit="return validateCredentialFields();">
+	<form action="Login" name = "loginCredentialsForm" method='post' onsubmit="return validateCredentialFields();">
 		<div style="padding: 100px 0 0 250px;">
 			<div id="login-box">
 				<h2>Login Page</h2>

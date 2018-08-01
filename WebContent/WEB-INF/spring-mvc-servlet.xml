@@ -1,28 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans
     	http://www.springframework.org/schema/beans/spring-beans.xsd
     	http://www.springframework.org/schema/context
     	http://www.springframework.org/schema/context/spring-context.xsd
     	http://www.springframework.org/schema/mvc
-        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
+
 
 	<!-- Step 3: Add support for component scanning -->
-	<context:component-scan base-package="com.*" />
+	<context:component-scan base-package="com.mindtree" />
 
 	<!-- Step 4: Add support for conversion, formatting and validation support -->
-	<mvc:annotation-driven/>
+	<mvc:annotation-driven />
+
+	<!-- Step 4: To add the static resources: CSS and images -->
+	<mvc:resources location="/resources/" mapping="/resources/**" />
 
 	<!-- Step 5: Define Spring MVC view resolver -->
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/WEB-INF/" />
+		<property name="prefix" value="/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
+
+	<!-- Step 6: Define Database DataSource / connection pool -->
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url"
+			value="jdbc:mysql://localhost:3306/inventorydb?useSSL=false" />
+		<property name="username" value="hbstudent" />
+		<property name="password" value="hbstudent" />
+
+		<!-- these are connection pool properties for C3P0 <property value="5" 
+			name="initialPoolSize" /> <property value="5" name="minPoolSize" /> <property 
+			value="20" name="maxPoolSize" /> <property value="30000" name="maxIdleTime" 
+			/> -->
+	</bean>
+
+	<!-- Step 7: Setup Hibernate session factory -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan">
+			<list>
+				<value>com.mindtree.beans</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="current_session_context_class">thread</prop>
+				<prop key="hibernate.enable_lazy_load_no_trans">true</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- Step 8: Setup Hibernate transaction manager -->
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<!-- Step 9: Enable configuration of transactional behavior based on annotations -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
 
 </beans>
 

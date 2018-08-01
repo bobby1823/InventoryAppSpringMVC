@@ -1,14 +1,18 @@
-<%@page import="java.util.ArrayList"%>
-<%@page import="com.service.DBManager"%>
-<%@page import="com.service.Item"%>
+<%@page import="java.util.List"%>
+<%@page import="com.mindtree.service.DBManager"%>
+<%@page import="com.mindtree.model.dao.impl.*"%>
+<%@page import="com.mindtree.service.Item"%>
+<%@page import="com.mindtree.beans.ProductTable" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Manage inventory</title>
-<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/resources/css/style.css"  rel="stylesheet" type="text/css" />
 </head>
 <script>
 	function showAlert(storeId, productId, deptId) {
@@ -83,9 +87,10 @@
 			</tr>
 
 			<%
-				ArrayList<Item> items = DBManager.getAllItems();
+				ShowInventoryDaoImpl product = new ShowInventoryDaoImpl();
+				List<ProductTable> items = product.showProductData();
 				int i = 1;
-				for (Item item : items) {
+				for (ProductTable item : items) {
 			%>
 			<tr style="background-color: #fefef5;">
 				<td style="text-align: center; background-color: #EFEFEE;"><strong><span
@@ -93,9 +98,9 @@
 				<td style="text-align: center; background-color: #EFEFEE;"><strong><span
 						style="color: #000000;">&nbsp;<%=item.getProductId()%></span></strong></td>
 				<td style="text-align: center; background-color: #EFEFEE;"><strong><span
-						style="color: #000000;">&nbsp;<%=item.getStoreId()%></span></strong></td>
+						style="color: #000000;">&nbsp;<%=item.getStoreInfo().getStoreId()%></span></strong></td>
 				<td style="text-align: center; background-color: #EFEFEE;"><strong><span
-						style="color: #000000;">&nbsp;<%=item.getDeptId()%></span></strong></td>
+						style="color: #000000;">&nbsp;<%=item.getDeptInfo()%></span></strong></td>
 				<td style="text-align: center; background-color: #EFEFEE;"><strong><span
 						style="color: #000000;">&nbsp;<%=item.getProductName()%></span></strong></td>
 				<td style="text-align: center; background-color: #EFEFEE;"><strong><span
@@ -110,12 +115,12 @@
 						style="color: #000000;">&nbsp;<%=item.getQuantity()%></span></strong></td>
 				<td style="text-align: center; background-color: #EEA43B;"><strong><span
 						style="color: #000000;">&nbsp;<a
-							href="javascript:modifyItem(<%=item.getStoreId()%>,<%=item.getProductId()%>,<%=item.getDeptId()%>);"><img
-								src="./images/editIcon.png" title="Edit Product"></img></a></span></strong></td>
+							href="javascript:modifyItem(<%=item.getStoreInfo().getStoreId()%>,<%=item.getProductId()%>,<%=item.getDeptInfo()%>);"><img
+								src="${pageContext.request.contextPath}/resources/images/editIcon.png" title="Edit Product"></img></a></span></strong></td>
 				<td style="text-align: center; background-color: #b90a2d;"><strong><span
 						style="color: #000000;">&nbsp;<a
-							href="javascript:showAlert(<%=item.getStoreId()%>,<%=item.getProductId()%>,<%=item.getDeptId()%>);"><img
-								src="./images/deleteIcon.png" title="Delete Product"></img></a></span></strong></td>
+							href="javascript:showAlert(<%=item.getStoreInfo().getStoreId()%>,<%=item.getProductId()%>,<%=item.getDeptInfo()%>);"><img
+								src="${pageContext.request.contextPath}/resources/images/deleteIcon.png" title="Delete Product"></img></a></span></strong></td>
 			</tr>
 			<%
 				i++;

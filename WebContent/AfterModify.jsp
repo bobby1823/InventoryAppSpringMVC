@@ -1,9 +1,10 @@
-<%@page import="com.service.DeleteService"%>
+<%@page import="com.mindtree.service.DeleteService"%>
 <%@page import="javax.servlet.http.HttpSession"%>
 <%@page import="javax.servlet.http.HttpServletRequest"%>
-<%@page import="com.model.dao.CheckUserType"%>
+<%@page import="com.mindtree.model.dao.CheckUserType"%>
 <%@page import="java.io.PrintWriter" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>

@@ -1,11 +1,13 @@
 <%@page import="java.util.ArrayList"%>
-<%@page import="com.service.DBManager"%>
-<%@page import="com.service.Item"%>
-<%@page import="com.model.dao.*"%>
-<%@page import="com.model.dao.impl.*"%>
-<%@page import="com.beans.InventoryUpdateTable" %>
+<%@page import="com.mindtree.service.DBManager"%>
+<%@page import="com.mindtree.service.Item"%>
+<%@page import="com.mindtree.model.dao.*"%>
+<%@page import="com.mindtree.model.dao.impl.*"%>
+<%@page import="com.mindtree.beans.InventoryUpdateTable" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>

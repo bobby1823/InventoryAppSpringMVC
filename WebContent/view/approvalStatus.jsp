@@ -1,54 +1,44 @@
-<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="com.mindtree.service.DBManager"%>
-<%@page import="com.mindtree.model.dao.impl.*"%>
 <%@page import="com.mindtree.service.Item"%>
-<%@page import="com.mindtree.beans.ProductTable" %>
+<%@page import="com.mindtree.model.dao.*"%>
+<%@page import="com.mindtree.model.dao.impl.*"%>
+<%@page import="com.mindtree.beans.InventoryUpdateTable" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Manage inventory</title>
-<link href="${pageContext.request.contextPath}/resources/css/style.css"  rel="stylesheet" type="text/css" />
-</head>
+<title>Check Your Approval Status</title>
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+
 <script>
-	function showAlert(storeId, productId, deptId) {
+			 
+	function approve(storeId, productId, deptId, operationType, productName, vendor, mrp, batchNum, batchDate, quantity, status) {
 		var txt;
-		txt = confirm("Do you really want to delete")
+		txt = confirm("Do you really want to Approve")
 		if (txt.toString() == "true") {
-			window.location = "delete.jsp?storeId=" + storeId + "&productId="
-					+ productId + "&deptId=" +deptId;
+			window.location = "approve.jsp?storeId=" + storeId + "&productId="
+					+ productId + "&deptId=" +deptId+ "&operationType=" + operationType + "&productName=" +productName+ "&vendor="+vendor+ "&mrp="+mrp+
+					"&batchNumber="+batchNum+ "&batchDate="+batchDate+ "&quantity="+quantity+ "&status="+status;
 		}
 	}
 
-	function modifyItem(storeId, productId, deptId) {
-		var request = new XMLHttpRequest();
-		request.onreadystatechange = function() {
-			var response = request.responseText;
-			document.getElementById("editData").innerHTML = response;
-			window.location = "#editData";
+	function deny(storeId, productId, deptId, operationType, productName, vendor, mrp, batchNum, batchDate, quantity, status) {
+		var txt;
+		txt = confirm("Do you really want to Deny the item request")
+		if (txt.toString() == "true") {
+			window.location = "approve.jsp?storeId=" + storeId + "&productId="
+					+ productId + "&deptId=" +deptId+ "&operationType=" + operationType + "&productName=" +productName+ "&vendor="+vendor+ "&mrp="+mrp+
+					"&batchNum="+batchNum+ "&batchDate="+batchDate+ "&quantity="+quantity+ "&status="+status;
 		}
-		request.open("get", "modify.jsp?storeId=" + storeId + "&productId="
-				+ productId + "&deptId=" +deptId, true);
-		request.send(null);
 	}
 </script>
+</head>
 <body>
-
-		<%
-			response.setHeader("Cache-Control","no-cache,no-store,must-revalidate");//HTTP 1.1
-		    response.setHeader("Pragma","no-cache"); //HTTP 1.0
-		    response.setDateHeader ("Expires", 0); //prevents caching at the proxy server
-		%>
-		<%
-			if(session.getAttribute("username") == null) {
-				response.sendRedirect("login.jsp");
-			}
-		%>
-	
 	<div id="menu">
 		<ul>
 			<li><a href="deptHome.jsp">Home</a>&nbsp;&nbsp;</li>
@@ -57,8 +47,6 @@
 			<li><a href="logout.jsp">Logout</a>&nbsp;&nbsp;</li>
 		</ul>
 	</div>
-	<br>
-	<br>
 	<div class="productsTable">
 		<table style="border: 1px solid #000000;" border="1" align="center">
 			<tr style="background-color: #315FA5;">
@@ -82,15 +70,26 @@
 						style="color: #ffffff;">Batch Date</span></strong></td>
 				<td style="text-align: center;"><strong><span
 						style="color: #ffffff;">Quantity</span></strong></td>
+				<td style="text-align: center;"><strong><span
+						style="color: #ffffff;">Request Type</span></strong></td>
+				<td style="text-align: center;"><strong><span
+						style="color: #ffffff;">Status</span></strong></td>
+				<%
+					String userName = session.getAttribute("username").toString();
+					if(CheckUserType.checkUserType(userName).equalsIgnoreCase("Store Manager")) {
+				 %>
 				<td colspan="2" style="text-align: center;"><strong><span
-						style="color: #ffffff;">Modify/Delete</span></strong></td>
+						style="color: #ffffff;">Approve/Deny</span></strong></td>
+				<%
+					}
+				 %>
 			</tr>
 
 			<%
-				ShowInventoryDaoImpl product = new ShowInventoryDaoImpl();
-				List<ProductTable> items = product.showProductData();
+				ShowInventoryDao showInventory = new ShowInventoryDaoImpl();
+				ArrayList<InventoryUpdateTable> items = showInventory.showInventoryData();
 				int i = 1;
-				for (ProductTable item : items) {
+				for (InventoryUpdateTable item : items) {
 			%>
 			<tr style="background-color: #fefef5;">
 				<td style="text-align: center; background-color: #EFEFEE;"><strong><span
@@ -100,7 +99,7 @@
 				<td style="text-align: center; background-color: #EFEFEE;"><strong><span
 						style="color: #000000;">&nbsp;<%=item.getStoreInfo().getStoreId()%></span></strong></td>
 				<td style="text-align: center; background-color: #EFEFEE;"><strong><span
-						style="color: #000000;">&nbsp;<%=item.getDeptInfo()%></span></strong></td>
+						style="color: #000000;">&nbsp;<%=item.getDeptInfo() %></span></strong></td>
 				<td style="text-align: center; background-color: #EFEFEE;"><strong><span
 						style="color: #000000;">&nbsp;<%=item.getProductName()%></span></strong></td>
 				<td style="text-align: center; background-color: #EFEFEE;"><strong><span
@@ -113,21 +112,28 @@
 						style="color: #000000;">&nbsp;<%=item.getBatchDate()%></span></strong></td>
 				<td style="text-align: center; background-color: #EFEFEE;"><strong><span
 						style="color: #000000;">&nbsp;<%=item.getQuantity()%></span></strong></td>
-				<td style="text-align: center; background-color: #EEA43B;"><strong><span
-						style="color: #000000;">&nbsp;<a
-							href="javascript:modifyItem(<%=item.getStoreInfo().getStoreId()%>,<%=item.getProductId()%>,<%=item.getDeptInfo()%>);"><img
-								src="${pageContext.request.contextPath}/resources/images/editIcon.png" title="Edit Product"></img></a></span></strong></td>
+				<td style="text-align: center; background-color: #EFEFEE;"><strong><span
+						style="color: #000000;">&nbsp;<%=item.getOperationType()%></span></strong></td>
+				<td style="text-align: center; background-color: #EFEFEE;"><strong><span
+						style="color: #000000;">&nbsp;<%=item.getStatus()%></span></strong></td>
+				<%					
+					if(CheckUserType.checkUserType(userName).equalsIgnoreCase("Store Manager")) {
+				%>
+				<td style="text-align: center; background-color: #4CAF50;"><strong><span
+						style="color: #000000;">&nbsp;<a href="javascript:approve(<%=item.getStoreInfo().getStoreId()%>,<%=item.getProductId()%>,<%=item.getDeptInfo()%>,<%="'"+item.getOperationType()+"'"%>,<%="'"+item.getProductName()+"'"%>,<%="'"+item.getVendor()+"'"%>,<%=item.getMrp()%>,<%="'"+item.getBatchNum()+"'"%>,<%="'"+item.getBatchDate()+"'"%>,<%=item.getQuantity()%>,<%="'"+item.getStatus()+"'"%>);"><img
+								src="./images/approveIcon.png" title="Approve"></a></span></strong></td>
 				<td style="text-align: center; background-color: #b90a2d;"><strong><span
-						style="color: #000000;">&nbsp;<a
-							href="javascript:showAlert(<%=item.getStoreInfo().getStoreId()%>,<%=item.getProductId()%>,<%=item.getDeptInfo()%>);"><img
-								src="${pageContext.request.contextPath}/resources/images/deleteIcon.png" title="Delete Product"></img></a></span></strong></td>
+						style="color: #000000;">&nbsp;<a href="javascript:deny(<%=item.getStoreInfo().getStoreId()%>,<%=item.getProductId()%>,<%=item.getDeptInfo()%>,<%="'"+item.getOperationType()+"'"%>,<%="'"+item.getProductName()+"'"%>,<%="'"+item.getVendor()+"'"%>,<%=item.getMrp()%>,<%="'"+item.getBatchNum()+"'"%>,<%="'"+item.getBatchDate()+"'"%>,<%=item.getQuantity()%>,<%="'"+item.getStatus()+"'"%>);"><img
+								src="./images/denyIcon.png" title="Deny"></a></span></strong></td>
+				<%
+					}
+				%>
 			</tr>
 			<%
 				i++;
 				}
 			%>
 		</table>
-		<div id="editData"></div>
 	</div>
 </body>
 </html>

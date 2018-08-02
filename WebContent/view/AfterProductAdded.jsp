@@ -1,17 +1,11 @@
-<%@page import="com.mindtree.service.DeleteService"%>
-<%@page import="javax.servlet.http.HttpSession"%>
-<%@page import="javax.servlet.http.HttpServletRequest"%>
-<%@page import="com.mindtree.model.dao.CheckUserType"%>
-<%@page import="java.io.PrintWriter" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 	 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">	
 	 <link rel="stylesheet" type="text/css" href="style.css">
-	 <title>Delete</title>
+	 <title>Product Added</title>
 </head>
 <body style="background-color: lightblue;">
 	 <%
@@ -25,19 +19,7 @@
 		}
 	%>
 	<center>
-		<%	
-			String userName = session.getAttribute("username").toString();
-			if(CheckUserType.checkUserType(userName).equalsIgnoreCase("Store Manager")) {
-				%>
-				<h1>Your Product have been successfully Removed!</h1>
-				<% 
-			}
-			else{
-				%>
-				<h1>Your Product have been successfully Sent for Approval!</h1>
-				<%
-			}
-		%>
+		 <h1>Your Product have been successfully added!</h1>
 		<h3 style="font-weight: normal;" title="">
 			<a href="deptHome.jsp" title="Home Page Link">Soon you will redirected to Home Page 
 						<%

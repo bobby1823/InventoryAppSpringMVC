@@ -42,6 +42,14 @@
 	    <scope>provided</scope>
 	</dependency>
 	
+	<!-- https://mvnrepository.com/artifact/javax.servlet.jsp.jstl/jstl-api -->
+	<dependency>
+	    <groupId>javax.servlet.jsp.jstl</groupId>
+	    <artifactId>jstl-api</artifactId>
+	    <version>1.2</version>
+	</dependency>
+	
+	
 	<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
 	<!-- <dependency>
 	    <groupId>org.hibernate</groupId>
@@ -84,14 +92,6 @@
 	    <artifactId>jstl</artifactId>
 	    <version>1.2</version>
 	</dependency> -->
-	
-	<!-- https://mvnrepository.com/artifact/javax.servlet.jsp.jstl/jstl-api -->
-	<dependency>
-	    <groupId>javax.servlet.jsp.jstl</groupId>
-	    <artifactId>jstl-api</artifactId>
-	    <version>1.2</version>
-	</dependency>
-
 	
   </dependencies>
 </project>

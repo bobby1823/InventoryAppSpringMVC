@@ -23,11 +23,10 @@ public class ShowInventoryDaoImpl implements ShowInventoryDao{
 	@Override
 	public void showInventoryData(String userName, String productId) {
 		
-		
 	}
 	
-	@Autowired
-	SessionFactory sessionFactory; 
+//	@Autowired
+//	SessionFactory sessionFactory; 
 	
 	
 	@Override

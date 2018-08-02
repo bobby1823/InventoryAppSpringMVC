@@ -25,7 +25,7 @@
 		<property name="current_session_context_class">thread</property>
  
  		<!-- mappings for annotated classes -->
- 		<mapping class = "com.beans.LoginUserTable"/>
+ 		<mapping class = "com.mindtree.beans.LoginUserTable"/>
  		
     </session-factory>
 

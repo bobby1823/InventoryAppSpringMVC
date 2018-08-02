@@ -37,8 +37,8 @@ public class LoginDaoImpl implements LoginDao{
 	@Override
 	public String userPassword(String userID) {
 		String data = "";
-		Session session = sessionFactory.getCurrentSession();
-		//Session session = HibernateConfig.openSession();
+		//Session session = sessionFactory.getCurrentSession();
+		Session session = HibernateConfig.openSession();
 		LoginUserTable loginUserDB = null;
 		loginUserDB = session.get(LoginUserTable.class, userID);
 		data = loginUserDB.getPassword();

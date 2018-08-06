@@ -4,21 +4,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Welcome</title>
+<title>Login Page</title>
 </head>
-<body>
-	<%
-		response.setHeader("Cache-Control","no-cache,no-store,must-revalidate");//HTTP 1.1
-	    response.setHeader("Pragma","no-cache"); //HTTP 1.0
-	    response.setDateHeader ("Expires", 0); //prevents caching at the proxy server
-	%>
-	<%
-		if(session.getAttribute("username") == null) {
-			response.sendRedirect("login.jsp");
+<script type="text/javascript" language="javascript">		
+		//txt = confirm("Do you really want to delete")
+		if (alert("Please Enter Correct Credentials") == undefined) {
+			window.location = "login.jsp";
 		}
-	%>
-	Welcome <% session.getAttribute("username");%>
+</script>
+		
+<body>
 	
-	<a href="video.jsp">Here is your Video</a>
 </body>
 </html>

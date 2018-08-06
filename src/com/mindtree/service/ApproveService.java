@@ -2,6 +2,7 @@ package com.mindtree.service;
 
 import java.util.Date;
 
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +25,8 @@ public class ApproveService {
 	//@Autowired
 	ModifyDao modifyDao = new ModifyDaoImpl();
 	
+	@Autowired
+	private SessionFactory session;
 	//@Autowired
 	AddProductDao productDao = new  AddProductDaoImpl();
 	
@@ -34,7 +37,7 @@ public class ApproveService {
 	GetObjectDao getObject = new GetObjectDaoImpl();
 	
 	@Autowired
-	ProductTable product1;
+	private ProductTable product1;
 		
 	ProductTable product = new ProductTable();
 	

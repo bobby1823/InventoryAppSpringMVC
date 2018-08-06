@@ -36,7 +36,7 @@
 		request.send(null);
 	}
 </script>
-<body>
+<body style="background-color: lightblue;">
 
 		<%
 			response.setHeader("Cache-Control","no-cache,no-store,must-revalidate");//HTTP 1.1

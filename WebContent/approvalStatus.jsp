@@ -38,7 +38,7 @@
 	}
 </script>
 </head>
-<body>
+<body style="background-color: lightblue;">
 	<div id="menu">
 		<ul>
 			<li><a href="deptHome.jsp">Home</a>&nbsp;&nbsp;</li>

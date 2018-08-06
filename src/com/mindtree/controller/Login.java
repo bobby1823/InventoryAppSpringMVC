@@ -1,6 +1,7 @@
 package com.mindtree.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -41,14 +42,14 @@ public class Login extends HttpServlet {
 		if(loginService.authentication(user)) {
 			session.setAttribute("username", request.getParameter("username"));
 			System.out.println("username is: "+request.getParameter("username") );
-			response.sendRedirect("deptHome.jsp");
-			return "addItem";
+			//response.sendRedirect("deptHome.jsp");
+			return "deptHome";
 		}
 		else {
 			System.out.println("username is: "+request.getParameter("username") );
-			response.sendRedirect("login.jsp");
-			return "login";
-			//Alert alert = new Alert(Alert.getAlertType(), "", null); 
+			return "login-error";
+			//response.sendRedirect("login.jsp");
+			//return "login";		
 		}
 	}
 }

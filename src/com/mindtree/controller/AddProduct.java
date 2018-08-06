@@ -31,7 +31,7 @@ public class AddProduct extends HttpServlet {
 	private static Logger logger = Logger.getLogger(AddProduct.class.getName());
 	
 	@Autowired
-	AddProductService addProductService; /*= new AddProductService();*/
+	AddProductService addProductService; 
 	
 	@PostMapping("/addProduct")
 	protected void AddProductController(@ModelAttribute("product") ProductTable product, HttpServletRequest request, HttpServletResponse response, Model model) throws ServletException, IOException, ParseException {
@@ -42,7 +42,7 @@ public class AddProduct extends HttpServlet {
 		product.setBatchDate(AppUtils.parseDate(product.getBatchDate()));
 		System.out.println("Value "+addProductService.checkStatusAddingProduct(userName, product));
 		PrintWriter out = response.getWriter();
-		if(!(addProductService.checkStatusAddingProduct(userName, product/*productId, storeId, deptId*/))) {
+		if(!(addProductService.checkStatusAddingProduct(userName, product))) {
 			System.out.println("Inside If Condition");
 			out.print("<script language='JavaScript'>alert('Please enter correct StoreId, ProductId and DeptId.');</script>");
 			
@@ -51,10 +51,13 @@ public class AddProduct extends HttpServlet {
 		else {
 			System.out.println("Inside Else Condition");
 			//For adding the product into DB
-			addProductService.addProduct(userName, product/*productId, storeId, deptId, productName, vendor, mrp, batchNum, batchDate, quantity*/);
+			addProductService.addProduct(userName, product);
 			response.sendRedirect("AfterProductAdded.jsp");
 			
 		}
 	}
-
+	/*@PostMapping("/addProduct")
+	public String vao(Model model) {
+		return "AfterProductAdded";
+	}*/
 }

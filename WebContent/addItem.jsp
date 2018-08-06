@@ -7,17 +7,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Add New Item</title>
 <link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet" type="text/css" />
-</head>
 <script type="text/javascript">
 	function validateForm() {
 		// validation for null values
 		var productId = document.forms["addProductForm"]["productId"].value;
-		var storeId = document.forms["addProductForm"]["storeId"].value;
-		var deptId = document.forms["addProductForm"]["deptId"].value;
+		var storeId = document.forms["addProductForm"]["storeInfo.storeId"].value;
+		var deptId = document.forms["addProductForm"]["deptInfo"].value;
 		var productName = document.forms["addProductForm"]["productName"].value;
 		var vendor = document.forms["addProductForm"]["vendor"].value;
 		var mrp = document.forms["addProductForm"]["mrp"].value;
-		var batchNumber = document.forms["addProductForm"]["batchNumber"].value;
+		var batchNumber = document.forms["addProductForm"]["batchNum"].value;
 		var batchDate = document.forms["addProductForm"]["batchDate"].value;
 		var quantity = document.forms["addProductForm"]["quantity"].value;
 		var errorMessage="";
@@ -68,7 +67,9 @@
 		}
 	}
 </script>
-<body>
+</head>
+
+<body style="background-color: lightblue;">
 <div id="menu">
 <ul>
 <li><a href="deptHome.jsp">Home</a>&nbsp;&nbsp;</li>
@@ -77,7 +78,7 @@
 <li><a href="logout.jsp">Logout</a>&nbsp;&nbsp;</li>
 </ul>
 </div>
-
+<!--  -->
 <form action="addProduct" method="post" modelAttribute="product" name="addProductForm" onsubmit="return validateForm()">
 	<br>
 	<br>

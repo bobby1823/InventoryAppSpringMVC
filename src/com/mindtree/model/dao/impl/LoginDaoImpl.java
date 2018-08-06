@@ -31,11 +31,16 @@ public class LoginDaoImpl implements LoginDao{
 		LoginUserTable loginUserDB = null;		
 		Query query = session.createQuery("from LoginUserTable where password='"+user.getPassword()+"' and username='"+user.getUsername()+"'");
 		List<LoginUserTable> userList = query.list();
-		loginUserDB = userList.get(0);
-		data[0] = loginUserDB.getUsername();
-		data[1] = loginUserDB.getPassword();
-		System.out.println("Credentials from DB: "+loginUserDB.getUsername());
-        return data;
+		if(userList.isEmpty()) {
+			return null;
+		}
+		else {
+			loginUserDB = userList.get(0);
+			data[0] = loginUserDB.getUsername();
+			data[1] = loginUserDB.getPassword();
+			System.out.println("Credentials from DB: "+loginUserDB.getUsername());
+			return data;
+		}       
 	}
 	
 

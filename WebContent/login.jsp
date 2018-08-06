@@ -13,47 +13,64 @@
 <script type="text/javascript" language="javascript">
 		var flag = 0;
 		function validateUserName() {
-			user = document.getElementsByClassName("form-login")[1].value;
+			var user = document.forms["loginCredentialsForm"]["username"].value;
 			//alert("User name" +user);
 			if (user == "") {
-				alert("Inside If condition UserName");
+				//alert("Inside If condition UserName");
 				flag = 1;
 				document.getElementById("userName_Error").innerHTML = "Please fill Username";
+				return false;
+			}
+			else {
+				return true;
 			}
 		}
 		
 		function validateEmail() {
-			user = document.getElementsByClassName("form-login")[0].value;
+			var user = document.forms["loginCredentialsForm"]["email"].value;
+			var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 			//alert("User name" +user);
 			if (user == "") {
-				alert("Inside If condition Email");
-				flag = 1;
+				//alert("Inside If condition Email");
 				document.getElementById("email_Error").innerHTML = "Please fill Email Address";
+				flag = 1;
+				return false;
 			}
-			else if(!user.contains("@") && !user.contains(".com")) {
+			if(!(re.test(String(user).toLowerCase()))) {
 				document.getElementById("email_Error").innerHTML = "Enter a proper Email Address";
+				flag = 1;
+				return false;
 			}
+			
+				return true;
+			
 		}
 		
 		function validatePassword() {
-			password = document.getElementsByClassName("form-login")[2].value;
+			var password = document.forms["loginCredentialsForm"]["password"].value;
 			if (password=="") {
 				flag = 1;
 				document.getElementById("password_Error").innerHTML = "Please fill Password";
+				return false;
 			}
+			else {
+				return true;
+			}
+			
 		}
 
 		function validateCredentialFields() {
-			//flag = 1;
 			validateEmail();
 			validatePassword();
 			validateUserName();
-			if(flag === 1) {
+			if(flag === 0) {
 				//alert("false");
-				return false;
-			} else {
-				//alert("true");
 				return true;
+			} 
+			
+			else {
+				//alert("true");
+				return false;
 			}
 		}
 		
@@ -61,7 +78,7 @@
 </head>
 <body style="background-color: lightblue;">
 
-	<form action="Login" name = "loginCredentialsForm" modelAttribute="loginDetails" method='post' onsubmit="return validateCredentialFields();">
+	<form action="Login" name = "loginCredentialsForm" modelAttribute="loginDetails" method='post' onsubmit="return validateCredentialFields()">
 		<div style="padding: 100px 0 0 250px;">
 			<div id="login-box">
 				<h2>Login Page</h2>

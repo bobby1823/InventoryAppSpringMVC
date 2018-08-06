@@ -1,9 +1,9 @@
 package com.mindtree.model.dao;
 
+import com.mindtree.beans.LoginUserTable;
 
 public interface LoginDao {
 
-	public String userId(String userID);
+	public String[] userValidation(LoginUserTable user);
 	
-	public String userPassword(String userID);
 }

@@ -12,6 +12,7 @@ import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
 
+@Component
 @Entity
 @Table(name="storedept")
 @IdClass(StoreDeptCompoundClass.class)

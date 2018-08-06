@@ -1,12 +1,13 @@
 package com.mindtree.model.dao.impl;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mindtree.beans.InventoryUpdateTable;
 import com.mindtree.beans.ProductTable;
@@ -15,9 +16,63 @@ import com.mindtree.hibernate.util.HibernateConfig;
 import com.mindtree.model.dao.AddProductDao;
 import com.mindtree.model.dao.CheckUserType;
 
+@Repository
 public class AddProductDaoImpl implements AddProductDao{
 
+	//@Autowired
+	SessionFactory sessionFactory;
+	
 	@Override
+	@Transactional
+	public void addProduct(String userName, ProductTable product) {
+			Session session = HibernateConfig.openSession();
+			//Session session = sessionFactory.getCurrentSession();			
+			session.getTransaction().begin();
+			session.save(product);
+	        session.getTransaction().commit();
+	        System.out.println("Product Details from DB: "+product);	
+	}
+
+	@Transactional
+	@Override
+	public void addInventory(String userName, ProductTable product/*int productId, int storeId, int deptId, String productName, String vendor,
+			double mrp, String batchNum, Date batchDate, int quantity*/) {		
+		StoreInfo userInfo = new StoreInfo();
+		InventoryUpdateTable updateTable = new InventoryUpdateTable();
+		Transaction tx = null;
+		Session session = HibernateConfig.openSession();
+			tx = session.getTransaction();
+			tx.begin();
+			//Getting the Product object
+			List<StoreInfo> q = session.createQuery("From StoreInfo where storeId="+product.getStoreInfo().getStoreId()).list();
+			
+			for(StoreInfo userInfo1 : q) {
+				userInfo = userInfo1;
+				System.out.println("Respective StoreId is "+userInfo.getStoreId());
+			}
+			
+			System.out.println("Store Details for Adding: "+userInfo);
+			//Passing the data to InventoryUpdate Table
+			updateTable.setStatus("Pending");
+			updateTable.setOperationType("Add");
+			updateTable.setBatchDate(product.getBatchDate());
+			updateTable.setBatchNum(product.getBatchNum());
+			updateTable.setDeptInfo(product.getDeptInfo());
+			updateTable.setMrp(product.getMrp());
+			updateTable.setProductId(product.getProductId());
+			updateTable.setProductName(product.getProductName());
+			updateTable.setQuantity(product.getQuantity());
+			updateTable.setStoreInfo(userInfo);
+			updateTable.setVendor(product.getVendor());
+			System.out.println("Data Sent for Approval: "+updateTable);
+			session.save(updateTable);
+			tx.commit(); 
+		
+	}
+	
+	
+	//---------------------Has to Delete
+	/*@Override
 	public void addProduct(String userName, int productId, int storeId, int deptId, String productName, String vendor,
 			double mrp, String batchNum, Date batchDate, int quantity) {
 		StoreInfo userInfo = new StoreInfo();
@@ -55,9 +110,11 @@ public class AddProductDaoImpl implements AddProductDao{
 	            session.close();
 	        }
 		
-	}
-
-	@Override
+	}*/
+	
+	//---------------------Has to Delete
+	
+	/*@Override
 	public void addInventory(String userName, int productId, int storeId, int deptId, String productName, String vendor,
 			double mrp, String batchNum, Date batchDate, int quantity) {
 		
@@ -104,11 +161,11 @@ public class AddProductDaoImpl implements AddProductDao{
 			session.close();
 		}
 		
-	}
+	}*/
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public boolean addStatus(String userName, int productId, int storeId, int deptId) {
+	public boolean addStatus(String userName, ProductTable product/*int productId, int storeId, int deptId*/) {
 		boolean status = true;	
 		boolean productIdstatus = false;
 		Transaction tx = null;
@@ -117,18 +174,18 @@ public class AddProductDaoImpl implements AddProductDao{
 		try {
 	            tx = session.getTransaction();
 	            tx.begin();
-	            List<StoreInfo> storeIdInfoList = session.createQuery("FROM StoreInfo where storeId="+storeId).list();
-	            List<StoreInfo> deptIdInfoList = session.createQuery("FROM DeptInfoTable where deptId="+deptId).list();
+	            List<StoreInfo> storeIdInfoList = session.createQuery("FROM StoreInfo where storeId="+product.getStoreInfo().getStoreId()).list();
+	            List<StoreInfo> deptIdInfoList = session.createQuery("FROM DeptInfoTable where deptId="+product.getDeptInfo()).list();
 	            
 	            if(CheckUserType.checkUserType(userName).equalsIgnoreCase("Store Manager")) {
-	            	productIdList = session.createQuery("FROM ProductTable where productId="+productId).list();
+	            	productIdList = session.createQuery("FROM ProductTable where productId="+product.getProductId()).list();
 	            	if(!(productIdList.isEmpty())) {
 	            		productIdstatus = true;
 	            	}
 	            }
 	            else {
-	            	productIdList = session.createQuery("FROM ProductTable where productId="+productId).list();
-	            	if((productIdList.isEmpty())) {
+	            	productIdList = session.createQuery("FROM ProductTable where productId="+product.getProductId()).list();
+	            	if(!(productIdList.isEmpty())) {
 	            		productIdstatus = true;
 	            	}
 	            	

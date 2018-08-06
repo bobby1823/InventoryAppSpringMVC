@@ -8,6 +8,66 @@
 <title>Add New Item</title>
 <link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet" type="text/css" />
 </head>
+<script type="text/javascript">
+	function validateForm() {
+		// validation for null values
+		var productId = document.forms["addProductForm"]["productId"].value;
+		var storeId = document.forms["addProductForm"]["storeId"].value;
+		var deptId = document.forms["addProductForm"]["deptId"].value;
+		var productName = document.forms["addProductForm"]["productName"].value;
+		var vendor = document.forms["addProductForm"]["vendor"].value;
+		var mrp = document.forms["addProductForm"]["mrp"].value;
+		var batchNumber = document.forms["addProductForm"]["batchNumber"].value;
+		var batchDate = document.forms["addProductForm"]["batchDate"].value;
+		var quantity = document.forms["addProductForm"]["quantity"].value;
+		var errorMessage="";
+		if(productId==""){
+			errorMessage=errorMessage+"Product Id must be filled\n";
+		}
+		if(storeId==""){
+			errorMessage=errorMessage+"Store Id must be filled\n";
+		}
+		if(deptId==""){
+			errorMessage=errorMessage+"Dept Id must be filled\n";
+		}
+		if(productName==""){
+			errorMessage=errorMessage+"Product Name must be filled\n";
+		}
+		if(vendor==""){
+			errorMessage=errorMessage+"Vendor Name must be filled\n";
+		}
+		if(mrp==""){
+			errorMessage=errorMessage+"MRP must be filled\n";
+		}
+		if(batchNumber==""){
+			errorMessage=errorMessage+"Batch Number must be filled\n";
+		}
+		if(batchDate==""){
+			errorMessage=errorMessage+"Batch Date must be filled\n";
+		}
+		if(quantity==""){
+			errorMessage=errorMessage+"Quantity must be filled\n";
+		}
+		if(errorMessage!=""){
+			alert(errorMessage);
+			return false;
+		}
+		var namePattern = /^[a-zA-Z]+(\s[a-zA-Z]+)*$/;
+		if(!namePattern.test(productName)){
+			alert("Product name should contain only alphabets. Accepted space between words.");
+			return false;
+		}
+		if(!namePattern.test(vendor)){
+			alert("Vendor name should contain only alphabets or spaces. Accepted space between words.");
+			return false;
+		}
+		var costPattern = /^\d+(\.\d{1,2}){0,1}$/;
+		if(!costPattern.test(mrp)){
+			alert("Please provide valid cost for the product. Accepted 2 digits after decimal.");
+			return false;
+		}
+	}
+</script>
 <body>
 <div id="menu">
 <ul>
@@ -18,7 +78,7 @@
 </ul>
 </div>
 
-<form action="AddProduct" method="post">
+<form action="addProduct" method="post" modelAttribute="product" name="addProductForm" onsubmit="return validateForm()">
 	<br>
 	<br>
 	<table style="border: 1px solid #000000;" border="1" align="center">
@@ -34,9 +94,9 @@
 			<td style="text-align: center; background-color: #EFEFEE;"><strong><span
 					style="color: #000000;">&nbsp;<input type="number" min="0" name="productId"></span></strong></td>
 			<td style="text-align: center; background-color: #EFEFEE;"><strong><span
-					style="color: #000000;">&nbsp;<input type="number" min="0" name = "storeId"></span></strong></td>
+					style="color: #000000;">&nbsp;<input type="number" min="0" name = "storeInfo.storeId"></span></strong></td>
 			<td style="text-align: center; background-color: #EFEFEE;"><strong><span
-					style="color: #000000;">&nbsp;<input type="number" min="0" name = "deptId"></span></strong></td>
+					style="color: #000000;">&nbsp;<input type="number" min="0" name = "deptInfo"></span></strong></td>
 		<tr style="background-color: #315FA5;">
 			<td style="text-align: center;"><strong><span
 					style="color: #ffffff;">Product Name</span></strong></td>
@@ -63,7 +123,7 @@
 					style="color: #ffffff;">Batch Number</span></strong></td>
 			<td colspan="2"
 				style="text-align: center; background-color: #EFEFEE;"><strong><span
-					style="color: #000000;">&nbsp;<input type="number" min="0" name = "batchNumber"></span></strong></td>
+					style="color: #000000;">&nbsp;<input type="number" min="0" name = "batchNum"></span></strong></td>
 		</tr>
 		<tr style="background-color: #315FA5;">
 			<td style="text-align: center;"><strong><span

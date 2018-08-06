@@ -13,7 +13,7 @@
 <script type="text/javascript" language="javascript">
 		var flag = 0;
 		function validateUserName() {
-			user = document.getElementsByClassName("form-login")[0].value;
+			user = document.getElementsByClassName("form-login")[1].value;
 			//alert("User name" +user);
 			if (user == "") {
 				alert("Inside If condition UserName");
@@ -22,8 +22,21 @@
 			}
 		}
 		
+		function validateEmail() {
+			user = document.getElementsByClassName("form-login")[0].value;
+			//alert("User name" +user);
+			if (user == "") {
+				alert("Inside If condition Email");
+				flag = 1;
+				document.getElementById("email_Error").innerHTML = "Please fill Email Address";
+			}
+			else if(!user.contains("@") && !user.contains(".com")) {
+				document.getElementById("email_Error").innerHTML = "Enter a proper Email Address";
+			}
+		}
+		
 		function validatePassword() {
-			password = document.getElementsByClassName("form-login")[1].value;
+			password = document.getElementsByClassName("form-login")[2].value;
 			if (password=="") {
 				flag = 1;
 				document.getElementById("password_Error").innerHTML = "Please fill Password";
@@ -32,8 +45,9 @@
 
 		function validateCredentialFields() {
 			//flag = 1;
-			validateUserName();
+			validateEmail();
 			validatePassword();
+			validateUserName();
 			if(flag === 1) {
 				//alert("false");
 				return false;
@@ -47,14 +61,15 @@
 </head>
 <body style="background-color: lightblue;">
 
-	<form action="Login" name = "loginCredentialsForm" method='post' onsubmit="return validateCredentialFields();">
+	<form action="Login" name = "loginCredentialsForm" modelAttribute="loginDetails" method='post' onsubmit="return validateCredentialFields();">
 		<div style="padding: 100px 0 0 250px;">
 			<div id="login-box">
 				<h2>Login Page</h2>
 				Please provide your credential to use this website <br> <br>
+				
 				<div id="login-box-name" style="margin-top: 20px;">User Id:</div>
 				<div id="login-box-field" style="margin-top: 20px;">
-					<input name="uname" class="form-login" title="Username" value=""
+					<input name="username" class="form-login" title="Username" value=""
 						size="20" maxlength="50" />
 						<div id="userName_Error" style="color: red;"></div>
 				</div>
@@ -70,6 +85,13 @@
 								src="https://cdn0.iconfinder.com/data/icons/feather/96/eye-16.png"
 								alt="eye" />
 						</button>
+				</div>
+				
+				<div id="login-box-name" style="margin-top: 20px;">Email Id:</div>
+				<div id="login-box-field" style="margin-top: 20px;">
+					<input name="email" class="form-login" title="Email Id" value=""
+						size="20" maxlength="50" />
+						<div id="email_Error" style="color: red;"></div>
 				</div>
 				
 				<br /> <span class="login-box-options"> New User? <a

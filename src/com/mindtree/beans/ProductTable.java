@@ -1,14 +1,9 @@
 package com.mindtree.beans;
 
-import java.util.Collection;
 import java.util.Date;
-import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -16,8 +11,11 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
+@Component
+@SuppressWarnings("unused")
 @Entity
 @Table(name="product")
 public class ProductTable {
@@ -41,7 +39,7 @@ public class ProductTable {
 	
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	//@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="productId")
 	private int productId;
 	
@@ -57,6 +55,7 @@ public class ProductTable {
 	@Column(name="batchNum")
 	private String batchNum;
 	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Temporal(TemporalType.DATE)
 	@Column(name="batchDate")
 	private Date batchDate;	
@@ -159,27 +158,9 @@ public class ProductTable {
 	}
 
 
-
-	/*public Collection<StoreInfo> getStoreInfo() {
-		return storeInfo;
-	}
-
-
-
-	public void setStoreInfo(List<StoreInfo> storeInfo) {
-		this.storeInfo = storeInfo;
-	}*/
-
-
-
 	public int getDeptInfo() {
 		return deptInfo;
 	}
-
-	/*public void setStoreInfo(int storeInfo) {
-		this.storeInfo = storeInfo;
-	}*/
-
 
 
 	public void setDeptInfo(int deptInfo) {
@@ -207,18 +188,5 @@ public class ProductTable {
 				+ ", storeInfo=" + storeInfo + ", deptInfo=" + deptInfo + "]";
 	}
 
-	
-
-	/*public List<DeptInfoTable> getDeptInfo() {
-		return deptInfo;
-	}
-
-
-
-	public void setDeptInfo(List<DeptInfoTable> deptInfo) {
-		this.deptInfo = deptInfo;
-	}*/
-	
-	
-	
+		
 }

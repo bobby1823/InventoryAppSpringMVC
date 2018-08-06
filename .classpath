@@ -356,7 +356,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="spring-lib/spring-web-5.0.2.RELEASE.jar">
+	<classpathentry kind="lib" path="spring-lib/spring-web-5.0.2.RELEASE.jar" sourcepath="spring-lib/spring-web-5.0.2.RELEASE-sources.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>

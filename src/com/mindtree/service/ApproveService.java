@@ -2,20 +2,34 @@ package com.mindtree.service;
 
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.mindtree.beans.ProductTable;
 import com.mindtree.exception.InventoryAppException;
 import com.mindtree.model.dao.AddProductDao;
 import com.mindtree.model.dao.CheckUserType;
 import com.mindtree.model.dao.DeleteProductDao;
+import com.mindtree.model.dao.GetObjectDao;
 import com.mindtree.model.dao.ModifyDao;
-import com.mindtree.model.dao.impl.AddProductDaoImpl;
-import com.mindtree.model.dao.impl.DeleteProductDaoImpl;
-import com.mindtree.model.dao.impl.ModifyDaoImpl;
 
+@Service
 public class ApproveService {
 	
-	ModifyDao modifyDao = new ModifyDaoImpl();
-	AddProductDao productDao = new  AddProductDaoImpl();
-	DeleteProductDao delete = new DeleteProductDaoImpl();
+	@Autowired
+	ModifyDao modifyDao /*= new ModifyDaoImpl()*/;
+	
+	@Autowired
+	AddProductDao productDao /*= new  AddProductDaoImpl()*/;
+	
+	@Autowired
+	DeleteProductDao delete /*= new DeleteProductDaoImpl()*/;
+	
+	@Autowired
+	GetObjectDao getObject;
+	
+	@Autowired
+	ProductTable product;
 	
 	public void approveItem(String userName, int productId, int storeId, int deptId, String productName, String vendor,
 			double mrp, String batchNum, Date batchDate, int quantity, String operationType) throws InventoryAppException {
@@ -23,7 +37,8 @@ public class ApproveService {
 		switch(operationType) {
 		case "Add":
 			if(CheckUserType.checkUserType(userName).equalsIgnoreCase("Store Manager")) {
-				productDao.addProduct(userName, productId, storeId, deptId, productName, vendor, mrp, batchNum, batchDate, quantity);
+				product = (ProductTable) getObject.getProduct(productId, storeId, deptId, product);
+				productDao.addProduct(userName, product/*productId, storeId, deptId, productName, vendor, mrp, batchNum, batchDate, quantity*/);
 				//Deleting Item From InventoryUpdate Table
 				delete.deleteFromInventory(userName, productId);
 			}
@@ -31,7 +46,8 @@ public class ApproveService {
 			
 		case "Modify":
 			if(CheckUserType.checkUserType(userName).equalsIgnoreCase("Store Manager")) {
-				modifyDao.modifyProduct(userName, productId, storeId, deptId, productName, vendor, mrp, batchNum, batchDate, quantity);
+				product = (ProductTable) getObject.getProduct(productId, storeId, deptId, product);
+				modifyDao.modifyProduct(userName, product);
 				//Deleting Item From InventoryUpdate Table
 				delete.deleteFromInventory(userName, productId);
 			}

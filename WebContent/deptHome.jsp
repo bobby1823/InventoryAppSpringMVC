@@ -129,5 +129,53 @@
 		</table>
 		<div id="editData"></div>
 	</div>
+	<script type="text/javascript">
+	function validateForm() {
+		// validation for null values
+		var productName = document.forms["editForm"]["productName"].value;
+		var vendor = document.forms["editForm"]["vendor"].value;
+		var mrp = document.forms["editForm"]["mrp"].value;
+		var batchNumber = document.forms["editForm"]["batchNumber"].value;
+		var batchDate = document.forms["editForm"]["batchDate"].value;
+		var quantity = document.forms["editForm"]["quantity"].value;
+		var errorMessage="";
+		if(productName==""){
+			errorMessage=errorMessage+"Product Name must be filled\n";
+		}
+		if(vendor==""){
+			errorMessage=errorMessage+"Vendor Name must be filled\n";
+		}
+		if(mrp==""){
+			errorMessage=errorMessage+"MRP must be filled\n";
+		}
+		if(batchNumber==""){
+			errorMessage=errorMessage+"Batch Number must be filled\n";
+		}
+		if(batchDate==""){
+			errorMessage=errorMessage+"Batch Date must be filled\n";
+		}
+		if(quantity==""){
+			errorMessage=errorMessage+"Quantity must be filled\n";
+		}
+		if(errorMessage!=""){
+			alert(errorMessage);
+			return false;
+		}
+		var namePattern = /^[a-zA-Z]+(\s[a-zA-Z]+)*$/;
+		if(!namePattern.test(productName)){
+			alert("Product name should contain only alphabets. Accepted space between words.");
+			return false;
+		}
+		if(!namePattern.test(vendor)){
+			alert("Vendor name should contain only alphabets or spaces. Accepted space between words.");
+			return false;
+		}
+		var costPattern = /^\d+(\.\d{1,2}){0,1}$/;
+		if(!costPattern.test(mrp)){
+			alert("Please provide valid cost for the product. Accepted 2 digits after decimal.");
+			return false;
+		}
+	}
+</script>
 </body>
 </html>

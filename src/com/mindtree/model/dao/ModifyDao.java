@@ -2,11 +2,11 @@ package com.mindtree.model.dao;
 
 import java.util.Date;
 
+import com.mindtree.beans.ProductTable;
+
 public interface ModifyDao {
 
-	public void modifyProduct(String userName, int productId, int storeId, int deptId, String productName, String vendor, 
-			double mrp, String batchNum, Date batchDate, int quantity);
+	public void modifyProduct(String userName, ProductTable product);
 	
-	public void modifyInventory(String userName, int productId, int storeId, int deptId, String productName, String vendor, 
-			double mrp, String batchNum, Date batchDate, int quantity);
+	public void modifyInventory(String userName, ProductTable product);
 }

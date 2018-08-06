@@ -16,10 +16,14 @@ import com.mindtree.beans.InventoryUpdateTable;
 import com.mindtree.beans.ProductTable;
 import com.mindtree.hibernate.util.HibernateConfig;
 import com.mindtree.model.dao.ShowInventoryDao;
+import org.apache.log4j.Logger;
 
+
+@SuppressWarnings("unused")
 @Repository
 public class ShowInventoryDaoImpl implements ShowInventoryDao{
-
+	final static Logger logger = Logger.getLogger(ShowInventoryDaoImpl.class);
+	
 	@Override
 	public void showInventoryData(String userName, String productId) {
 		
@@ -29,6 +33,7 @@ public class ShowInventoryDaoImpl implements ShowInventoryDao{
 //	SessionFactory sessionFactory; 
 	
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
 	public List<ProductTable> showProductData() {
@@ -41,37 +46,23 @@ public class ShowInventoryDaoImpl implements ShowInventoryDao{
 	
 	@SuppressWarnings("unchecked")
 	@Override
+	@Transactional
 	public ArrayList<InventoryUpdateTable> showInventoryData() {
 		//InventoryUpdateTable inventory = new InventoryUpdateTable();
-		Transaction tx = null;
 		Session session = HibernateConfig.openSession();
 		List<InventoryUpdateTable> inventoryData = null;
-		try {
-	            tx = session.getTransaction();
-	            tx.begin();
-	            //Getting all the data into InventoryUpdateTable Bean. 
-	            inventoryData = session.createQuery("From InventoryUpdateTable").list();
-	            
-	            tx.commit();
-	            System.out.println("Inventory Details from DB: "+inventoryData.get(0).getStoreInfo().getStoreId());
-	            
-	        } 
-	        catch (Exception e) {
-	            if (tx != null) {
-	                tx.rollback();
-	            }
-	            e.printStackTrace();
-	        } finally {
-	            session.close();
-	        }
+		//Getting all the data into InventoryUpdateTable Bean. 
+		inventoryData = session.createQuery("from InventoryUpdateTable").list();
+		
 		return (ArrayList<InventoryUpdateTable>) inventoryData;
 	}
 
 
-	public static void main(String args[]) {
+	/*public static void main(String args[]) {
 		//ApplicationContext ctx = new FileSystemXmlApplicationContext("/WebContent/WEB-INF/spring-mvc-servlet.xml");
 		ShowInventoryDao dao = new ShowInventoryDaoImpl();
 		System.out.println("Size of Product Table is "+dao.showProductData().size());
+		dao.showInventoryData();
 
-	}
+	}*/
 }

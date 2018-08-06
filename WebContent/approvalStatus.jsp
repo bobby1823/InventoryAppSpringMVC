@@ -13,7 +13,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Check Your Approval Status</title>
-<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="${pageContext.request.contextPath}/resources/css/style.css" rel="stylesheet" type="text/css" />
 
 <script>
 			 
@@ -89,7 +89,8 @@
 				ShowInventoryDao showInventory = new ShowInventoryDaoImpl();
 				ArrayList<InventoryUpdateTable> items = showInventory.showInventoryData();
 				int i = 1;
-				for (InventoryUpdateTable item : items) {
+				if(items != null) {
+					for (InventoryUpdateTable item : items) {
 			%>
 			<tr style="background-color: #fefef5;">
 				<td style="text-align: center; background-color: #EFEFEE;"><strong><span
@@ -132,6 +133,7 @@
 			<%
 				i++;
 				}
+			}
 			%>
 		</table>
 	</div>

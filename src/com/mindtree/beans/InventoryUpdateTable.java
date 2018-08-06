@@ -17,6 +17,7 @@ import javax.persistence.TemporalType;
 
 import org.springframework.stereotype.Component;
 
+@Component
 @Entity
 @Table(name="inventoryupdate")
 @IdClass(InventoryUpdateCompoundTable.class)

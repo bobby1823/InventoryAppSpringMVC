@@ -3,6 +3,7 @@
 <%@page import="javax.servlet.http.HttpServletRequest"%>
 <%@page import="com.mindtree.model.dao.CheckUserType"%>
 <%@page import="java.io.PrintWriter" %>
+<%@page import="org.springframework.beans.factory.annotation.Autowired" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 

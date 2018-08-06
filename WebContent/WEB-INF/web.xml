@@ -37,6 +37,12 @@
     <servlet-class>com.controller.Modify</servlet-class>
   </servlet>
    
+   <!-- <listener>
+	    <listener-class>
+	        org.springframework.web.context.ContextLoaderListener
+	    </listener-class>
+	</listener> -->
+   
   <servlet>
   	<servlet-name>dispatcher</servlet-name>
   	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -52,5 +58,4 @@
   	<servlet-name>dispatcher</servlet-name>
   	<url-pattern>/</url-pattern>
   </servlet-mapping>
-
 </web-app>

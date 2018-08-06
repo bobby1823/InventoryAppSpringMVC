@@ -1,14 +1,20 @@
 package com.mindtree.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.mindtree.exception.InventoryAppException;
 import com.mindtree.model.dao.CheckUserType;
 import com.mindtree.model.dao.DeleteProductDao;
-import com.mindtree.model.dao.impl.DeleteProductDaoImpl;
 
+@Service
 public class DeleteService {
 
-	DeleteProductDao deleteData = new DeleteProductDaoImpl();
+	@Autowired
+	DeleteProductDao deleteData /*= new DeleteProductDaoImpl()*/;
 	
+	@Transactional
 	public void deleteProduct(String userName, int productId/*, int storeId, int deptId, String productName, String vendor, 
 			double mrp, String batchNum, Date batchDate, int quantity*/) throws InventoryAppException {
 		if(CheckUserType.checkUserType(userName).equalsIgnoreCase("Store Manager")) {

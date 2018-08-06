@@ -1,42 +1,34 @@
 package com.mindtree.service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.Query;
-
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mindtree.beans.ProductTable;
-import com.mindtree.beans.StoreDept;
-import com.mindtree.beans.StoreInfo;
-import com.mindtree.hibernate.util.HibernateConfig;
 import com.mindtree.model.dao.CheckUserType;
 import com.mindtree.model.dao.ModifyDao;
-import com.mindtree.model.dao.impl.ModifyDaoImpl;
 
+@Service
 public class ModifyProductService {
 
 	public ModifyProductService() {
 		
 	}
 	
-	ModifyDao modifyDao = new ModifyDaoImpl();
+	@Autowired
+	ModifyDao modifyDao /*= new ModifyDaoImpl()*/;
 	
-	public void modifyProduct(String userName, int productId, int storeId, int deptId, String productName, String vendor, 
-			double mrp, String batchNum, Date batchDate, int quantity) {
-		if(CheckUserType.checkUserType(userName).equalsIgnoreCase("Store Manager")) {
-			modifyDao.modifyProduct(userName, productId, storeId, deptId, productName, vendor, mrp, batchNum, batchDate, quantity);
-		}
-		else {
-			modifyDao.modifyInventory(userName, productId, storeId, deptId, productName, vendor, mrp, batchNum, batchDate, quantity);
-		}
-
+	@Transactional
+	public void modifyProduct(String userName, ProductTable product) {
+			modifyDao.modifyProduct(userName, product);
 	}
 	
+	@Transactional
+	public void modifyProductInventory(String userName, ProductTable product) {		
+			modifyDao.modifyInventory(userName, product);
+	}
 	/*public static void main(String args[]) throws ParseException {
 		ModifyProductService modify = new ModifyProductService();
 		Date date = new SimpleDateFormat("dd/MM/yyyy").parse("06/09/2019");

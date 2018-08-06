@@ -1,10 +1,13 @@
 package com.mindtree.model.dao.impl;
 
+import java.util.List;
+
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mindtree.beans.LoginUserTable;
 import com.mindtree.hibernate.util.HibernateConfig;
@@ -16,92 +19,24 @@ public class LoginDaoImpl implements LoginDao{
 	
 	@Autowired
 	public SessionFactory sessionFactory;
-	
-	
-	@Override
-	public String userId(String userID) {
-
-		String data = "";
-		Session session = HibernateConfig.openSession();
-		//Session session = sessionFactory.getCurrentSession();
-        //User user = null;
-		LoginUserTable loginUserDB = null;       
-		loginUserDB = session.get(LoginUserTable.class, userID);
-		data = loginUserDB.getUsername();
-		System.out.println("UserName from DB: "+data);
-	
-        return data;
-	}
 
 	
+	@SuppressWarnings("unused")
 	@Override
-	public String userPassword(String userID) {
-		String data = "";
-		//Session session = sessionFactory.getCurrentSession();
-		Session session = HibernateConfig.openSession();
-		LoginUserTable loginUserDB = null;
-		loginUserDB = session.get(LoginUserTable.class, userID);
-		data = loginUserDB.getPassword();
-		System.out.println("UserName from DB: "+data);
+	@Transactional
+	public String[] userValidation(LoginUserTable user) {
+		String[] data = new String[3];
+		Session session = sessionFactory.getCurrentSession();
+		//Session session = HibernateConfig.openSession();
+		LoginUserTable loginUserDB = null;		
+		Query query = session.createQuery("from LoginUserTable where password='"+user.getPassword()+"' and username='"+user.getUsername()+"'");
+		List<LoginUserTable> userList = query.list();
+		loginUserDB = userList.get(0);
+		data[0] = loginUserDB.getUsername();
+		data[1] = loginUserDB.getPassword();
+		System.out.println("Credentials from DB: "+loginUserDB.getUsername());
         return data;
 	}
 	
-	
-	/*@Override
-	public String userId(String userID) {
 
-		String data = "";
-		Session session = HibernateConfig.openSession();
-        Transaction tx = null;
-        //User user = null;
-        LoginUserTable loginUserDB = null;
-        try {
-            tx = session.getTransaction();
-            tx.begin();
-            //Query query = session.createQuery("from userTable where username='"+userID+"'");
-            //loginUserDB = (LoginUserTable)query.uniqueResult();
-            loginUserDB = session.get(LoginUserTable.class, userID);
-            data = loginUserDB.getUsername();
-            System.out.println("UserName from DB: "+data);
-            tx.commit();
-        } 
-        catch (Exception e) {
-            if (tx != null) {
-                tx.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-        return data;
-	}
-
-	
-	@Override
-	public String userPassword(String userID) {
-		String data = "";
-		Session session = HibernateConfig.openSession();
-        Transaction tx = null;
-//        User user = null;
-        LoginUserTable loginUserDB = null;
-        try {
-            tx = session.getTransaction();
-            tx.begin();
-//            Query query = session.createQuery("from userTable where password='"+password+"'");
-//            loginUserDB = (LoginUserTable)query.uniqueResult();
-            loginUserDB = session.get(LoginUserTable.class, userID);
-            data = loginUserDB.getPassword();
-            System.out.println("UserName from DB: "+data);
-            tx.commit();
-        } 
-        catch (Exception e) {
-            if (tx != null) {
-                tx.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-        return data;
-	}*/
 }

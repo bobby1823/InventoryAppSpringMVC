@@ -31,7 +31,7 @@
 		var txt;
 		txt = confirm("Do you really want to Deny the item request")
 		if (txt.toString() == "true") {
-			window.location = "approve.jsp?storeId=" + storeId + "&productId="
+			window.location = "deny.jsp?storeId=" + storeId + "&productId="
 					+ productId + "&deptId=" +deptId+ "&operationType=" + operationType + "&productName=" +productName+ "&vendor="+vendor+ "&mrp="+mrp+
 					"&batchNum="+batchNum+ "&batchDate="+batchDate+ "&quantity="+quantity+ "&status="+status;
 		}
@@ -122,10 +122,10 @@
 				%>
 				<td style="text-align: center; background-color: #4CAF50;"><strong><span
 						style="color: #000000;">&nbsp;<a href="javascript:approve(<%=item.getStoreInfo().getStoreId()%>,<%=item.getProductId()%>,<%=item.getDeptInfo()%>,<%="'"+item.getOperationType()+"'"%>,<%="'"+item.getProductName()+"'"%>,<%="'"+item.getVendor()+"'"%>,<%=item.getMrp()%>,<%="'"+item.getBatchNum()+"'"%>,<%="'"+item.getBatchDate()+"'"%>,<%=item.getQuantity()%>,<%="'"+item.getStatus()+"'"%>);"><img
-								src="./images/approveIcon.png" title="Approve"></a></span></strong></td>
+								src="${pageContext.request.contextPath}/resources/images/approveIcon.png" title="Approve"></a></span></strong></td>
 				<td style="text-align: center; background-color: #b90a2d;"><strong><span
 						style="color: #000000;">&nbsp;<a href="javascript:deny(<%=item.getStoreInfo().getStoreId()%>,<%=item.getProductId()%>,<%=item.getDeptInfo()%>,<%="'"+item.getOperationType()+"'"%>,<%="'"+item.getProductName()+"'"%>,<%="'"+item.getVendor()+"'"%>,<%=item.getMrp()%>,<%="'"+item.getBatchNum()+"'"%>,<%="'"+item.getBatchDate()+"'"%>,<%=item.getQuantity()%>,<%="'"+item.getStatus()+"'"%>);"><img
-								src="./images/denyIcon.png" title="Deny"></a></span></strong></td>
+								src="${pageContext.request.contextPath}/resources/images/denyIcon.png" title="Deny"></a></span></strong></td>
 				<%
 					}
 				%>

@@ -34,19 +34,26 @@ public class GetObjectDaoImpl implements GetObjectDao{
 	@Transactional
 	public Object getProduct(int productId, int storeId, int deptId, Object object) {
 		Session session = HibernateConfig.openSession();
-		if(object.equals(new ProductTable())){
-			List<ProductTable> productList = session.createSQLQuery("select * from product where productId="+productId+" and storeId="+storeId+" and deptId="+deptId).list();
-			return productList.get(0);
+		if(object.getClass().getName().contains("ProductTable")){
+			List<ProductTable> productList = session.createQuery("from ProductTable where productId="+productId+" and deptId="+deptId).list();
+			if(productList.size()<=0) {
+				return null;
+			}
+			else{
+				return productList.get(0);
+			}
 		}
 		else {
-			List<InventoryUpdateTable> inventoryProductList = session.createSQLQuery("select * from inventoryupdate where productId="+productId+" and storeId="+storeId+" and deptId="+deptId).list();
+			List<InventoryUpdateTable> inventoryProductList = session.createQuery("from InventoryUpdateTable where productId="+productId+" and deptId="+deptId).list();
 			return inventoryProductList.get(0);	
 		}
 	}
 	
-	public static void main(String args[]) {
+	/*public static void main(String args[]) {
 		GetObjectDaoImpl dao = new GetObjectDaoImpl();
 		//List theList = new ArrayList(dao.getProduct(1, 2, 2, new InventoryUpdateTable()));
-		System.out.println(dao.get(2, "StoreInfo"));
-	}
+		ProductTable product = new ProductTable();
+		System.out.println(product.getClass().getName());
+		System.out.println(dao.getProduct(5, 2, 1, new ProductTable()));
+	}*/
 }

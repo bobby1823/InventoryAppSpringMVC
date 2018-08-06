@@ -63,8 +63,8 @@
 		if(CheckUserType.checkUserType(userName).equalsIgnoreCase("Store Manager")) {
 				//Approve Service is getting called.
 				ApproveService approve = new ApproveService();
-				approve.approveItem(userName, productId, storeId, deptId, productName, vendor, mrp, batchNum, batchDate, quantity, operationType);
-				System.out.println("Entering into After Delete Page");
+				approve.deny(userName, productId, storeId, deptId, productName, vendor, mrp, batchNum, batchDate, quantity, operationType);
+				System.out.println("Entering into After Deny Page");
 				response.sendRedirect("AfterDelete.jsp");
 			}
 		else {

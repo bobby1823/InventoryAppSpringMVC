@@ -7,16 +7,18 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mindtree.exception.InventoryAppException;
 import com.mindtree.model.dao.CheckUserType;
 import com.mindtree.model.dao.DeleteProductDao;
+import com.mindtree.model.dao.impl.DeleteProductDaoImpl;
 
 @Service
 public class DeleteService {
 
 	@Autowired
-	DeleteProductDao deleteData /*= new DeleteProductDaoImpl()*/;
+	DeleteProductDao deleteData1 /*= new DeleteProductDaoImpl()*/;
+	
+	DeleteProductDao deleteData = new DeleteProductDaoImpl();
 	
 	@Transactional
-	public void deleteProduct(String userName, int productId/*, int storeId, int deptId, String productName, String vendor, 
-			double mrp, String batchNum, Date batchDate, int quantity*/) throws InventoryAppException {
+	public void deleteProduct(String userName, int productId) throws InventoryAppException {
 		if(CheckUserType.checkUserType(userName).equalsIgnoreCase("Store Manager")) {
 			deleteData.deleteProduct(userName, productId);
 		}

@@ -27,19 +27,7 @@
 			DeleteService deleteService = new DeleteService();
 			deleteService.deleteProduct(userName, deleteProductId);
 			response.sendRedirect("AfterDelete.jsp");
-			/* if(CheckUserType.checkUserType(userName).equalsIgnoreCase("Store Manager")) {
-				
-			}
-			response.setContentType("text/html");
-		    PrintWriter op = response.getWriter();
-
-		    op.println("<html>");
-		    op.println("<head>");
-		    op.println("<title>Delete</title>");
-		    op.println("</head>");
-		    op.println("<body bgcolor=\"blue\">");
-		    op.println("</body>");
-		    op.println("</html>"); */
+		
 		%>
 </body>
 </html>

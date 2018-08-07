@@ -26,15 +26,15 @@ import com.mindtree.service.AddProductService;
  * Controller implementation class AddProduct
  */
 @Controller
-public class AddProduct extends HttpServlet {
+public class AddProductController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static Logger logger = Logger.getLogger(AddProduct.class.getName());
+	private static Logger logger = Logger.getLogger(AddProductController.class.getName());
 	
 	@Autowired
 	AddProductService addProductService; 
 	
 	@PostMapping("/addProduct")
-	protected void AddProductController(@ModelAttribute("product") ProductTable product, HttpServletRequest request, HttpServletResponse response, Model model) throws ServletException, IOException, ParseException {
+	protected void AddProduct(@ModelAttribute("product") ProductTable product, HttpServletRequest request, HttpServletResponse response, Model model) throws ServletException, IOException, ParseException {
 		HttpSession session = request.getSession();
 		String userName = session.getAttribute("username").toString();
 		logger.info("Date from form is: "+product.getBatchDate());

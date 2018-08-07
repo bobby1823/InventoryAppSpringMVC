@@ -25,8 +25,8 @@ import com.mindtree.service.LoginService;
 @SuppressWarnings("serial")
 //@WebServlet(description = "Used for Logging in", urlPatterns = { "/Login" })
 @Controller
-public class Login extends HttpServlet {
-	final static Logger logger = Logger.getLogger(Login.class);
+public class LoginController extends HttpServlet {
+	final static Logger logger = Logger.getLogger(LoginController.class);
 	
 	@Autowired
 	LoginService loginService;

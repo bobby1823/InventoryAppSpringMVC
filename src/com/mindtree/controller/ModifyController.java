@@ -25,7 +25,7 @@ import com.mindtree.service.ModifyProductService;
 
 //@WebServlet("/Modify")
 @Controller
-public class Modify extends HttpServlet {
+public class ModifyController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Autowired

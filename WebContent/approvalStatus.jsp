@@ -23,7 +23,7 @@
 		if (txt.toString() == "true") {
 			window.location = "approve.jsp?storeId=" + storeId + "&productId="
 					+ productId + "&deptId=" +deptId+ "&operationType=" + operationType + "&productName=" +productName+ "&vendor="+vendor+ "&mrp="+mrp+
-					"&batchNumber="+batchNum+ "&batchDate="+batchDate+ "&quantity="+quantity+ "&status="+status;
+					"&batchNum="+batchNum+ "&batchDate="+batchDate+ "&quantity="+quantity+ "&status="+status;
 		}
 	}
 

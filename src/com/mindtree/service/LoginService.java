@@ -18,7 +18,8 @@ public class LoginService {
 	LoginDao login;
 	
 	public boolean authentication(LoginUserTable user) {
-		boolean status = !(login.userValidation(user)==(null)) && !(login.userValidation(user).equals(""));
+		String [] loginUserValidation = login.userValidation(user);
+		boolean status = !(loginUserValidation ==(null)) && !(loginUserValidation.equals(""));
 		if(status) {
 			System.out.println("Authentication Status: "+status);
 			return true;

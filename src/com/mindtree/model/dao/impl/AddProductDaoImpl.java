@@ -28,7 +28,7 @@ public class AddProductDaoImpl implements AddProductDao{
 			Session session = HibernateConfig.openSession();
 			//Session session = sessionFactory.getCurrentSession();			
 			session.getTransaction().begin();
-			session.save(product);
+			session.saveOrUpdate(product);
 	        session.getTransaction().commit();
 	        System.out.println("Product Details from DB: "+product);	
 	}
@@ -65,7 +65,7 @@ public class AddProductDaoImpl implements AddProductDao{
 			updateTable.setStoreInfo(userInfo);
 			updateTable.setVendor(product.getVendor());
 			System.out.println("Data Sent for Approval: "+updateTable);
-			session.save(updateTable);
+			session.saveOrUpdate(updateTable);
 			tx.commit(); 
 		
 	}

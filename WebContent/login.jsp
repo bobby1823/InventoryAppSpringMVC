@@ -28,7 +28,7 @@
 		
 		function validateEmail() {
 			var user = document.forms["loginCredentialsForm"]["email"].value;
-			var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+			//var re = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 			//alert("User name" +user);
 			if (user == "") {
 				//alert("Inside If condition Email");
@@ -36,12 +36,16 @@
 				flag = 1;
 				return false;
 			}
-			if(!(re.test(String(user).toLowerCase()))) {
-				document.getElementById("email_Error").innerHTML = "Enter a proper Email Address";
+			if(!user.includes("@") && !user.includes(".com")) {
+				document.getElementById("email_Error").innerHTML = "Please fill Email Address in correct format";
 				flag = 1;
 				return false;
 			}
-			
+			if(!user.includes(".com")) {
+				document.getElementById("email_Error").innerHTML = "Please fill Email Address in correct format";
+				flag = 1;
+				return false;
+			}
 				return true;
 			
 		}
@@ -111,9 +115,9 @@
 						<div id="email_Error" style="color: red;"></div>
 				</div>
 				
-				<br /> <span class="login-box-options"> New User? <a
+				<br /> <!-- <span class="login-box-options"> New User? <a
 					href="register.jsp" style="margin-left: 30px;">Register Here</a>
-				</span> <br /> <br /> <input style="margin-left: 100px;" type="submit"
+				</span> --> <br /> <br /> <input style="margin-left: 100px;" type="submit"
 					value="Login" />
 			</div>
 		</div>
